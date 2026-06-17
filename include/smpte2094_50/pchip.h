@@ -38,6 +38,9 @@ class PchipInterpolator {
  public:
   static absl::StatusOr<PchipInterpolator> Create(absl::Span<const float> x,
                                                   absl::Span<const float> y);
+  static absl::StatusOr<PchipInterpolator> Create(absl::Span<const float> x,
+                                                  absl::Span<const float> y,
+                                                  absl::Span<const float> slopes);
 
   PchipInterpolator(const PchipInterpolator& other);
   PchipInterpolator& operator=(const PchipInterpolator& other);

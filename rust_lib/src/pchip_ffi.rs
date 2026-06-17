@@ -87,6 +87,8 @@ pub mod ffi {
         ) -> Box<PchipInterpolatorResult>;
         #[cxx_name = "pchip_interpolator_create_ffi"]
         fn pchip_interpolator_create_ffi_bridge(x: &[f32], y: &[f32]) -> Box<PchipInterpolatorResult>;
+        #[cxx_name = "pchip_interpolator_create_with_slopes_ffi"]
+        fn pchip_interpolator_create_with_slopes_ffi_bridge(x: &[f32], y: &[f32], slopes: &[f32]) -> Box<PchipInterpolatorResult>;
         #[cxx_name = "gain_curve_create_ffi"]
         fn gain_curve_create_ffi_bridge(x: &[f32], y: &[f32]) -> Box<GainCurveResult>;
         #[cxx_name = "gain_curve_create_with_slopes_ffi"]
@@ -119,6 +121,10 @@ pub fn create_subsampled_pchip_ffi_bridge(
 
 pub fn pchip_interpolator_create_ffi_bridge(x: &[f32], y: &[f32]) -> Box<PchipInterpolatorResult> {
     Box::new(PchipInterpolator::create_ffi(x, y))
+}
+
+pub fn pchip_interpolator_create_with_slopes_ffi_bridge(x: &[f32], y: &[f32], slopes: &[f32]) -> Box<PchipInterpolatorResult> {
+    Box::new(PchipInterpolator::create_with_slopes_ffi(x, y, slopes))
 }
 
 pub fn gain_curve_create_ffi_bridge(x: &[f32], y: &[f32]) -> Box<GainCurveResult> {

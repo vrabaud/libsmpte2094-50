@@ -134,6 +134,19 @@ TEST(PchipSlopesTest, UnsortedX) {
   EXPECT_FALSE(res.ok());
 }
 
+TEST(PchipInterpolatorTest, CreateWithSlopes) {
+  std::vector<float> x = {0.0f, 1.0f, 2.0f};
+  std::vector<float> y = {0.0f, 1.0f, 2.0f};
+  std::vector<float> slopes = {1.0f, 1.0f, 1.0f};
+  auto res = PchipInterpolator::Create(x, y, slopes);
+  ASSERT_TRUE(res.ok());
+  auto& interp = *res;
+
+  EXPECT_EQ(interp.x(), x);
+  EXPECT_EQ(interp.y(), y);
+  EXPECT_EQ(interp.slopes(), slopes);
+}
+
 TEST(PchipInterpolatorTest, Interpolation) {
   std::vector<float> x = {0.0f, 1.0f, 2.0f};
   std::vector<float> y = {0.0f, 1.0f, 0.0f};

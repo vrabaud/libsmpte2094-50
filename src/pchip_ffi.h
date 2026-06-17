@@ -101,6 +101,9 @@ class PchipInterpolator {
 
   static PchipInterpolatorResult create_ffi(absl::Span<const float> x,
                                             absl::Span<const float> y);
+  static PchipInterpolatorResult create_with_slopes_ffi(
+      absl::Span<const float> x, absl::Span<const float> y,
+      absl::Span<const float> slopes);
 
   float interpolate(float xi) const { return interp->interpolate(xi); }
 
@@ -154,6 +157,15 @@ inline PchipInterpolatorResult PchipInterpolator::create_ffi(
   return PchipInterpolatorResult(pchip_ffi::pchip_interpolator_create_ffi(
       ::rust::Slice<const float>(x.data(), x.size()),
       ::rust::Slice<const float>(y.data(), y.size())));
+}
+inline PchipInterpolatorResult PchipInterpolator::create_with_slopes_ffi(
+    absl::Span<const float> x, absl::Span<const float> y,
+    absl::Span<const float> slopes) {
+  return PchipInterpolatorResult(
+      pchip_ffi::pchip_interpolator_create_with_slopes_ffi(
+          ::rust::Slice<const float>(x.data(), x.size()),
+          ::rust::Slice<const float>(y.data(), y.size()),
+          ::rust::Slice<const float>(slopes.data(), slopes.size())));
 }
 
 class GainCurveResult;

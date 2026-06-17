@@ -53,6 +53,18 @@ absl::StatusOr<PchipInterpolator> PchipInterpolator::Create(
       std::make_unique<Impl>(Impl{std::move(result.interp)}));
 }
 
+absl::StatusOr<PchipInterpolator> PchipInterpolator::Create(
+    absl::Span<const float> x, absl::Span<const float> y,
+    absl::Span<const float> slopes) {
+  ::pchip_rs::PchipInterpolatorResult result =
+      pchip_rs::PchipInterpolator::create_with_slopes_ffi(x, y, slopes);
+  if (!result.success) {
+    return absl::InvalidArgumentError(result.get_error_message());
+  }
+  return PchipInterpolator(
+      std::make_unique<Impl>(Impl{std::move(result.interp)}));
+}
+
 PchipInterpolator::PchipInterpolator(std::unique_ptr<Impl> impl)
     : impl_(std::move(impl)) {}
 
