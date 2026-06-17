@@ -194,6 +194,12 @@ impl PchipInterpolator {
         }
     }
 
+    /// FFI wrapper for `PchipInterpolator::create_with_slopes`, returning a `PchipInterpolatorResult`.
+    pub fn create_with_slopes_ffi(x: &[f32], y: &[f32], slopes: &[f32]) -> PchipInterpolatorResult {
+        let interp = Self::create_with_slopes(x.to_vec(), y.to_vec(), slopes.to_vec());
+        PchipInterpolatorResult { interp, success: true, error_message: String::new() }
+    }
+
     /// Creates a new `PchipInterpolator` with provided control points `x`, `y`, and precomputed `slopes`.
     pub fn create_with_slopes(x: Vec<f32>, y: Vec<f32>, slopes: Vec<f32>) -> Self {
         Self { x, y, slopes }
